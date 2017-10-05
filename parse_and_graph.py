@@ -14,4 +14,4 @@ for edge in strings_df.rename(columns=graph_renaming).to_dict('records'):
     graph.edge(**edge)
 graph.engine = 'circo'
 graph.graph_attr['overlap'] = 'false'
-graph.render(view=True)
+graph.render(FILEPATH + '.gv', view=True)
