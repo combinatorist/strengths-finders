@@ -127,7 +127,7 @@ melted = pd.melt(trim_exec_df.reset_index(), id_vars=['index']).rename(columns={
 #     graph.edge(**edge)
 # import pdb; pdb.pm()
 # melted.columns
-# strings_df = melted[['name', 'strength']]
+strings_df = melted[['name', 'strength']]
 # strings_df['rank'] = string(melted['rank'])
 # strings_df['rank'] = str(melted['rank'])
 # strings_df
