@@ -1,13 +1,15 @@
 import pandas as pd
 import graphviz as gv
 
-exec_df = pd.DataFrame.from_csv('executive_team_raw.csv', header=1)
-trim_exec_df = exec_df.dropna(thresh=5, axis=0)
+FILEPATH = 'executive_team_raw.csv'
+
+raw_df = pd.DataFrame.from_csv(FILEPATH, header=1)
+melted_df = pd.melt(raw_df.reset_index(), id_vars=['index']).dropna()
+strings_df = melted_df.applymap(str)
+
 graph = gv.Graph()
-melted = pd.melt(trim_exec_df.reset_index(), id_vars=['index']).rename(columns={'index':'name', 'variable':'strength', 'value':'rank'}).dropna()
-strings_df = melted[['name', 'strength']]
-strings_df['rank'] = melted['rank'].apply(str)
-for edge in strings_df.rename(columns={'name':'tail_name','strength':'head_name','rank':'label'}).to_dict('records'):
+graph_renaming = {'index':'tail_name','variable':'head_name','value':'label'}
+for edge in strings_df.rename(columns=graph_renaming).to_dict('records'):
     graph.edge(**edge)
 graph.engine = 'neato'
 graph.graph_attr['overlap'] = 'false'
