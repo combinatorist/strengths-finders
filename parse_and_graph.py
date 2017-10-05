@@ -16,3 +16,55 @@ graph.engine = 'circo'
 graph.format = 'png'
 graph.graph_attr['overlap'] = 'false'
 graph.render(FILEPATH + '.gv', view=True)
+
+# calculate probability
+"""
+
+p = number of people
+s = distinct strengths
+t = distinct possible strengths
+d = depth (number of top strengths per person)
+
+
+pvalue_for_s_strengths = ways_with_s_strengths / ways_with_t_strengths
+
+---
+
+ways_with_t_strengths = ncr(t, d) ** p
+
+---
+
+ways_with_s_strengths
+
+Underestimate
+# undercounts distinct ways to pick set S out of T
+
+    ways_with_s_strengths >= ncr(s, d) ** p
+
+Overestimate
+# overcounts situations where p people don't use all s strengths
+
+    ways_with_s_strengths <= ncr(s, d) ** p * ncr(t, s)
+
+It would be good to incorporate actual distributions:
+https://drive.google.com/file/d/0B9GCEaVaZ_FLZDM0bk9Dckc2Sms/view
+
+"""
+import ncr
+
+def underestimate(t=34, d=5, p=7, s=17):
+    return ncr.Fraction(ncr.ncr(s,d),ncr.ncr(t, d)) ** p
+
+def overestimate(t=34, d=5, p=7, s=17):
+    return underestimate(t, d, p, s) * ncr.ncr(t,s)
+
+print ("Assuming some fixed values (based on example)")
+under = underestimate()
+print("\nUnderestimate:")
+print(under)
+print(float(under))
+
+over = overestimate()
+print("\nOverestimate:")
+print(over)
+print(float(over))
