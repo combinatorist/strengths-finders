@@ -1,7 +1,7 @@
 import pandas as pd
 import graphviz as gv
 
-FILEPATH = 'executive_team_raw.csv'
+FILEPATH = 'example/redacted_team_raw.csv'
 
 raw_df = pd.DataFrame.from_csv(FILEPATH, header=1)
 melted_df = pd.melt(raw_df.reset_index(), id_vars=['index']).dropna()
