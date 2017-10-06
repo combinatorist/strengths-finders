@@ -64,6 +64,7 @@ def underestimate(t=34, d=5, p=p, s=s):
 def overestimate(t=34, d=5, p=p, s=s):
     return underestimate(t, d, p, s) * ncr.ncr(t,s)
 
+# would prefer to add these to the graph instead of printing
 under = underestimate()
 print("\nUnderestimate:")
 print(under)
