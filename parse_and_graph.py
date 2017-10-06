@@ -52,15 +52,18 @@ It would be good to incorporate actual distributions:
 https://drive.google.com/file/d/0B9GCEaVaZ_FLZDM0bk9Dckc2Sms/view
 
 """
+
+p = melted_df.index.nunique()
+s = melted_df.variable.nunique()
+
 import ncr
 
-def underestimate(t=34, d=5, p=2, s=5):
+def underestimate(t=34, d=5, p=p, s=s):
     return ncr.Fraction(ncr.ncr(s,d),ncr.ncr(t, d)) ** p
 
-def overestimate(t=34, d=5, p=2, s=5):
+def overestimate(t=34, d=5, p=p, s=s):
     return underestimate(t, d, p, s) * ncr.ncr(t,s)
 
-print ("Assuming some fixed values (based on example)")
 under = underestimate()
 print("\nUnderestimate:")
 print(under)
