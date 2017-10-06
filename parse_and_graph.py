@@ -1,9 +1,11 @@
 import pandas as pd
 import graphviz as gv
 
-FILEPATH = 'example/redacted_team_raw.csv'
+INPUTDIR = 'example/'
+OUTPUTDIR = 'example/'
+SUBPATH = 'redacted_team_raw.csv'
 
-raw_df = pd.DataFrame.from_csv(FILEPATH, header=1)
+raw_df = pd.DataFrame.from_csv(INPUTDIR + SUBPATH, header=1)
 melted_df = pd.melt(raw_df.reset_index(), id_vars=['index']).dropna()
 strings_df = melted_df.applymap(str)
 
@@ -15,7 +17,7 @@ for edge in strings_df.rename(columns=graph_renaming).to_dict('records'):
 graph.engine = 'circo'
 graph.format = 'png'
 graph.graph_attr['overlap'] = 'false'
-graph.render(FILEPATH + '.gv', view=True)
+graph.render(OUTPUTDIR + SUBPATH + '.gv', view=True)
 
 # calculate probability
 """
@@ -52,10 +54,10 @@ https://drive.google.com/file/d/0B9GCEaVaZ_FLZDM0bk9Dckc2Sms/view
 """
 import ncr
 
-def underestimate(t=34, d=5, p=7, s=17):
+def underestimate(t=34, d=5, p=2, s=5):
     return ncr.Fraction(ncr.ncr(s,d),ncr.ncr(t, d)) ** p
 
-def overestimate(t=34, d=5, p=7, s=17):
+def overestimate(t=34, d=5, p=2, s=5):
     return underestimate(t, d, p, s) * ncr.ncr(t,s)
 
 print ("Assuming some fixed values (based on example)")
