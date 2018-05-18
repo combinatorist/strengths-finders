@@ -52,8 +52,10 @@ def main(SUBPATH, INPUTDIR = 'input/', OUTPUTDIR = 'output/'):
 
     """
 
-    p = melted_df.index.nunique()
-    s = melted_df.variable.nunique()
+    p = 2 #melted_df.index.nunique()
+    s = 3 #melted_df.variable.nunique()
+    t = 4
+    d = 2
 
     import ncr
 
@@ -64,12 +66,12 @@ def main(SUBPATH, INPUTDIR = 'input/', OUTPUTDIR = 'output/'):
         return underestimate(t, d, p, s) * ncr.ncr(t,s)
 
     # would prefer to add these to the graph instead of printing
-    under = underestimate()
+    under = underestimate(t, d)
     print("\nUnderestimate:")
     print(under)
     print(float(under))
 
-    over = overestimate()
+    over = overestimate(t, d)
     print("\nOverestimate:")
     print(over)
     print(float(over))
